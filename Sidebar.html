@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+      button {
+        background-color: #4285F4;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+        border-radius: 4px;
+        margin-top: 10px; /* Menambah jarak antar tombol */
+      }
+      button:disabled {
+        background-color: #c0c0c0;
+        cursor: not-allowed;
+      }
+      p {
+        font-size: 12px;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>Konverter Teks</h3>
+    <p>
+      Blok teks di dokumen Anda, lalu pilih salah satu tombol di bawah ini.
+    </p>
+
+    <button id="apply-heading-button" onclick="applyHeadingConversion()">Ubah # Menjadi Heading</button>
+    
+    <button id="apply-bullet-button" onclick="applyBulletConversion()">Ubah * Menjadi Bullet</button>
+
+    <script>
+      // Fungsi untuk konversi heading
+      function applyHeadingConversion() {
+        var btn = document.getElementById('apply-heading-button');
+        btn.disabled = true;
+        btn.innerText = 'Memproses...';
+
+        google.script.run
+          .withSuccessHandler(function() {
+            btn.disabled = false;
+            btn.innerText = 'Ubah # Menjadi Heading';
+          })
+          .withFailureHandler(function(error) {
+            alert('Terjadi kesalahan: ' + error.message);
+            btn.disabled = false;
+            btn.innerText = 'Ubah # Menjadi Heading';
+          })
+          .processSelectedText();
+      }
+
+      // --- FUNGSI JAVASCRIPT BARU ---
+      // Fungsi untuk konversi bulleted list
+      function applyBulletConversion() {
+        var btn = document.getElementById('apply-bullet-button');
+        btn.disabled = true;
+        btn.innerText = 'Memproses...';
+
+        google.script.run
+          .withSuccessHandler(function() {
+            btn.disabled = false;
+            btn.innerText = 'Ubah * Menjadi Bullet';
+          })
+          .withFailureHandler(function(error) {
+            alert('Terjadi kesalahan: ' + error.message);
+            btn.disabled = false;
+            btn.innerText = 'Ubah * Menjadi Bullet';
+          })
+          .processListItems(); // <-- Memanggil fungsi baru di Code.gs
+      }
+    </script>
+  </body>
+</html>

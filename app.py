@@ -4,7 +4,7 @@ import re
 import gradio as gr
 
 # ==============================================================================
-# FUNGSI ANDA (TIDAK ADA PERUBAHAN DI SINI)
+# FUNGSI PERAPI ARTIKEL
 # ==============================================================================
 def rapikan_artikel_pro(teks_mentah: str) -> str:
     """
@@ -13,7 +13,7 @@ def rapikan_artikel_pro(teks_mentah: str) -> str:
     """
     if not teks_mentah:
         return "Input kosong. Silakan masukkan teks."
-    
+
     blok_kepala = []
     blok_isi = []
     penanda_akhir_kepala = "alt text gambar:"
@@ -93,7 +93,7 @@ js_copy_function = """
 }
 """
 
-with gr.Blocks(theme=gr.themes.Soft()) as app: # GANTI NAMA DARI 'antarmuka' MENJADI 'app'
+with gr.Blocks(theme=gr.themes.Soft()) as app:
     gr.Markdown("# Alat Perapi Artikel (Versi Final)")
     gr.Markdown("Versi ini tidak akan mengubah bagian awal artikel (hingga 'Alt Text Gambar') dan hanya merapikan sisanya, termasuk judul utama.")
     
@@ -109,5 +109,6 @@ with gr.Blocks(theme=gr.themes.Soft()) as app: # GANTI NAMA DARI 'antarmuka' MEN
     tombol_submit.click(fn=rapikan_artikel_pro, inputs=teks_input, outputs=teks_output)
     tombol_copy.click(fn=lambda x: x, inputs=teks_output, outputs=None, js=js_copy_function)
     tombol_clear.click(fn=lambda: ("", ""), inputs=None, outputs=[teks_input, teks_output])
-
-# TIDAK ADA LAGI baris 'app.launch()' di sini
+    
+# Baris penting untuk menjalankan aplikasi di Hugging Face Spaces
+app.launch()
